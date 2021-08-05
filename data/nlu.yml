@@ -31,6 +31,31 @@ nlu:
     - bye bye
     - see you later
 
+- intent: search_provider_obligations
+  examples: |
+    - how much is my [VAT] (obligation_type)
+    - how much I need to pay regarding [VAT] (obligation_type)
+    - how much is my [Social Security] (obligation_type)
+    - how much I need to pay regarding [Social Security] (obligation_type)
+    - how much is my [Deductions] (obligation_type) 
+    - how much I need to pay regarding [Deductions] (obligation_type)
+    - how much is my [Compensation Fund] (obligation_type)
+    - how much I need to pay regarding [Compensation Fund] (obligation_type)
+    - until when can I pay my [VAT] (obligation_type)
+    - what is the limit of date that I can pay my [VAT] (obligation_type)
+    - until when can I pay my [Social Security] (obligation_type)
+    - what is the limit of date that I can pay my [Social Security] (obligation_type)
+    - until when can I pay my [Deductions] (obligation_type)
+    - what is the limit of date that I can pay my [Deductions] (obligation_type)
+    - until when can I pay my [Compensation Fund] (obligation_type)
+    - what is the limit of date that I can pay my [Compensation Fund] (obligation_type)
+
+- intent: search_provider_insights
+  examples: |
+    - Show me a [positive] (insight_type) insight
+    - Show me a [medium] (insight_type) insight.
+    - Show me a [negative] (insight_type) insight.
+
 - intent: affirm
   examples: |
     - yes
