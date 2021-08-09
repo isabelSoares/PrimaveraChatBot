@@ -3,40 +3,51 @@ version: "2.0"
 intents:
   - greet
   - goodbye
+  - ask_obligations
+  - ask_insights
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
   - bot_challenge
 
 entities:
-  - email
+  - obligation_type
+  - insight_type
 
 slots:  
-  email:
-    type: unfeaturized
+  obligation_type:
+    type: categorical
+    values:
+      - VAT
+      - Social Security
+      - Deductions
+      - Compensation Fund
+
+  insight_type:
+    type: categorical
+    values: 
+      - positive
+      - medium
+      - negative
 
 actions:
-  - utter_great
-  - utter_cheer_up
-  - utter_did_that_help
-  - utter_happy
+  - utter_greet
+  - utter_how_can_i_help_more
   - utter_goodbye
   - utter_iamabot
+  - action_obligation_search
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+  - text: "Hey! How can I help you today?"
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  utter_ask_obligation:
+  - text: "Your VAT value to pay is 4606.0€"
+  
+  utter_ask_insight:
+  - text: "In the next 30 days, it will increase the disponibilities in 6000€"
 
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+  utter_how_can_i_help_more:
+  - text: " How can I help you more today?"
 
   utter_goodbye:
   - text: "Bye"

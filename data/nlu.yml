@@ -31,7 +31,7 @@ nlu:
     - bye bye
     - see you later
 
-- intent: search_provider_obligations
+- intent: ask_obligations
   examples: |
     - how much is my [VAT] (obligation_type)
     - how much I need to pay regarding [VAT] (obligation_type)
@@ -50,7 +50,7 @@ nlu:
     - until when can I pay my [Compensation Fund] (obligation_type)
     - what is the limit of date that I can pay my [Compensation Fund] (obligation_type)
 
-- intent: search_provider_insights
+- intent: ask_insights
   examples: |
     - Show me a [positive] (insight_type) insight
     - Show me a [medium] (insight_type) insight.
@@ -74,40 +74,6 @@ nlu:
     - don't like that
     - no way
     - not really
-
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
 
 - intent: bot_challenge
   examples: |

@@ -2,29 +2,49 @@ version: "2.0"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
 
-- story: sad path 1
+- story: search obligation VAT direct path
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - intent: ask_obligations
+  - action: utter_how_can_i_help_more
   - intent: deny
+  - action: utter_goodbye
+  - intent: goodbye
+
+- story: search obligation VAT indirect path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_obligations
+  - action: utter_how_can_i_help_more
+  - intent: affirm
+  - intent: ask_obligations
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: search insight POSITIVE direct path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_insights
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: search insight POSITIVE indirect path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_insights
+  - action: utter_how_can_i_help_more
+  - intent: affirm
+  - intent: ask_insights
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
   - action: utter_goodbye
