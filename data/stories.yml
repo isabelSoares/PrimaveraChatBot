@@ -7,20 +7,23 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: ask_obligations
+  - intent: ask_obligation
+  - action: utter_ask_obligation
   - action: utter_how_can_i_help_more
   - intent: deny
-  - action: utter_goodbye
   - intent: goodbye
+  - action: utter_goodbye
 
 - story: search obligation VAT indirect path
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: ask_obligations
+  - intent: ask_obligation 
+  - action: utter_ask_obligation
   - action: utter_how_can_i_help_more
   - intent: affirm
-  - intent: ask_obligations
+  - intent: ask_obligation
+  - action: utter_ask_obligation
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
@@ -30,7 +33,8 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: ask_insights
+  - intent: ask_insight
+  - action: utter_ask_insight
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
@@ -40,10 +44,12 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: ask_insights
+  - intent: ask_insight
+  - action: utter_ask_insight
   - action: utter_how_can_i_help_more
   - intent: affirm
-  - intent: ask_insights
+  - intent: ask_insight
+  - action: utter_ask_insight
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
