@@ -31,7 +31,7 @@ nlu:
     - bye bye
     - see you later
 
-- intent: ask_obligations
+- intent: ask_obligation
   examples: |
     - how much is my [VAT] (obligation_type)
     - how much I need to pay regarding [VAT] (obligation_type)
@@ -50,9 +50,9 @@ nlu:
     - until when can I pay my [Compensation Fund] (obligation_type)
     - what is the limit of date that I can pay my [Compensation Fund] (obligation_type)
 
-- intent: ask_insights
+- intent: ask_insight
   examples: |
-    - Show me a [positive] (insight_type) insight
+    - Show me a [positive] (insight_type) insight.
     - Show me a [medium] (insight_type) insight.
     - Show me a [negative] (insight_type) insight.
 

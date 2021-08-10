@@ -3,8 +3,8 @@ version: "2.0"
 intents:
   - greet
   - goodbye
-  - ask_obligations
-  - ask_insights
+  - ask_obligation
+  - ask_insight
   - affirm
   - deny
   - bot_challenge
@@ -32,6 +32,8 @@ slots:
 actions:
   - utter_greet
   - utter_how_can_i_help_more
+  - utter_ask_obligation
+  - utter_ask_insight
   - utter_goodbye
   - utter_iamabot
   - action_obligation_search
@@ -47,7 +49,7 @@ responses:
   - text: "In the next 30 days, it will increase the disponibilities in 6000€"
 
   utter_how_can_i_help_more:
-  - text: " How can I help you more today?"
+  - text: "Can I help you more today?"
 
   utter_goodbye:
   - text: "Bye"
