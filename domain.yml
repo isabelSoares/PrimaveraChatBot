@@ -1,9 +1,17 @@
 version: "2.0"
 
+#config:
+#  store_entities_as_slots: true
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
 intents:
   - greet
   - goodbye
   - ask_obligation
+    #use_entities: true
   - ask_insight
   - affirm
   - deny
@@ -36,11 +44,11 @@ actions:
   - utter_ask_insight
   - utter_goodbye
   - utter_iamabot
-  - action_obligation_search
+  - query_obligation
 
 responses:
   utter_greet:
-  - text: "Hey! How can I help you today?"
+  - text: "Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?"
 
   utter_ask_obligation:
   - text: "Your VAT value to pay is 4606.0€"
@@ -56,7 +64,3 @@ responses:
 
   utter_iamabot:
   - text: "I am a PrimaveraChatBot, powered by Rasa."
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true

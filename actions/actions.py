@@ -15,20 +15,20 @@ import sqlite3
 import random
 from fuzzywuzzy import process
 
-class QueryResourceType(Action):
+class QueryObligationType(Action):
 
     def name(self) -> Text:
-        return "action_obligation_search"
+        return "query_obligation_type"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         """
         Runs a query using only the type column, fuzzy matching against the
-        resource_type slot. Outputs an utterance to the user w/ the relevent 
+        obligation_type slot. Outputs an utterance to the user w/ the relevent 
         information for one of the returned rows.
         """
-        conn = DbQueryingMethods.create_connection(db_file="./primavera_db/resourcesDB")
+        conn = DbQueryingMethods.create_connection(db_file="./primavera_db/obligationsDB")
 
         slot_value = tracker.get_slot("obligation_type")
         slot_name = "ID"
@@ -44,63 +44,58 @@ class QueryResourceType(Action):
 
         return 
 
-class QueryResource(Action):
+class QueryObligation(Action):
 
     def name(self) -> Text:
-        return "query_resource"
+        return "query_obligation"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         """
-        Runs a query using both the topic & type columns (fuzzy matching against the
+        Runs a query using both the value_to_pay & type columns (fuzzy matching against the
         relevent slots). Finds a match for both if possible, otherwise a match for the
-        type only, topic only in that order. Output is an utterance directly to the
+        type only, value_to_pay only in that order. Output is an utterance directly to the
         user with a randomly selected matching row.
         """
-        conn = DbQueryingMethods.create_connection(db_file="./edu_db/resourcesDB")
+        conn = DbQueryingMethods.create_connection(db_file="./primavera_db/obligationsDB")
 
-        # get matching entries for resource type
-        resource_type_value = tracker.get_slot("resource_type")
+        # get matching entries for obligation type
+        obligation_type_value = tracker.get_slot("obligation_type")
+        print("obligation_type_value1:", obligation_type_value)
         # make sure we don't pass None to our fuzzy matcher
-        if resource_type_value == None:
-            resource_type_value = " "
-        resource_type_name = "Type"
-        resource_type_value = DbQueryingMethods.get_closest_value(conn=conn,
-            slot_name=resource_type_name,slot_value=resource_type_value)[0]
-        query_results_type = DbQueryingMethods.select_by_slot(conn=conn,
-            slot_name=resource_type_name,slot_value=resource_type_value)
+        if obligation_type_value == None:
+            obligation_type_value = " "
+        obligation_type_name = "TYPE"
+        obligation_type_value = DbQueryingMethods.get_closest_value(conn=conn,
+            slot_name=obligation_type_name,slot_value=obligation_type_value)[0]
+        print("obligation_type_value2:", obligation_type_value)
+        query_results = DbQueryingMethods.select_by_slot(conn=conn,
+            slot_name=obligation_type_name,slot_value=obligation_type_value)
 
-        # get matching for resource topic
-        resource_topic_value = tracker.get_slot("resource_topic")
-        # make sure we don't pass None to our fuzzy matcher
-        if resource_topic_value == None:
-            resource_topic_value = " "
-        resource_topic_name = "Topic"
-        resource_topic_value = DbQueryingMethods.get_closest_value(conn=conn,    
-            slot_name=resource_topic_name,slot_value=resource_topic_value)[0]
-        query_results_topic = DbQueryingMethods.select_by_slot(conn=conn,
-            slot_name=resource_topic_name,slot_value=resource_topic_value)
-
+        '''
         # intersection of two queries
-        topic_set = collections.Counter(query_results_topic)
+        value_to_pay_set = collections.Counter(query_results_value_to_pay)
         type_set =  collections.Counter(query_results_type)
 
-        query_results_overlap = list((topic_set & type_set).elements())
+        query_results_overlap = list((value_to_pay_set & type_set).elements())
 
         # apology for not having the right info
         apology = "I couldn't find exactly what you wanted, but you might like this."
 
-        # return info for both, or topic match or type match or nothing
+        # return info for both, or value_to_pay match or type match or nothing
         if len(query_results_overlap)>0:
             return_text = DbQueryingMethods.rows_info_as_text(query_results_overlap)
-        elif len(list(query_results_topic))>0:
-            return_text = apology + DbQueryingMethods.rows_info_as_text(query_results_topic)
+        elif len(list(query_results_value_to_pay))>0:
+            return_text = apology + DbQueryingMethods.rows_info_as_text(query_results_value_to_pay)
         elif len(list(query_results_type))>0:
             return_text = apology + DbQueryingMethods.rows_info_as_text(query_results_type)
         else:
             return_text = DbQueryingMethods.rows_info_as_text(query_results_overlap)
+        '''
+
+        return_text = DbQueryingMethods.rows_info_as_text(query_results)
         
         # print results for user
         dispatcher.utter_message(text=str(return_text))
@@ -160,7 +155,7 @@ class DbQueryingMethods:
         text to that effect.
         """
         if len(list(rows)) < 1:
-            return "There are no resources matching your query."
+            return "There are no obligations matching your query."
         else:
             for row in random.sample(rows, 1):
                 return f"Try the {(row[4]).lower()} {row[0]} by {row[1]}. You can find it at {row[2]}."

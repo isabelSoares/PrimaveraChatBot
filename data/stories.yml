@@ -6,32 +6,32 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: ask_obligation
-  - slot_was_set:
-    - obligation_type: VAT
-  - action: utter_ask_obligation
+  #- slot_was_set:
+  #  - obligation_type: "Deductions"
+  - action: utter_ask_obligation #query_obligation
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
   - action: utter_goodbye
 
-- story: search obligation VAT indirect path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ask_obligation
-  - slot_was_set:
-    - obligation_type: VAT 
-  - action: utter_ask_obligation
-  - action: utter_how_can_i_help_more
-  - intent: affirm
-  - intent: ask_obligation
-  - slot_was_set:
-    - obligation_type: VAT
-  - action: utter_ask_obligation
-  - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
-  - action: utter_goodbye
+#- story: search obligation VAT indirect path
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: ask_obligation
+#  - slot_was_set:
+#    - obligation_type: VAT 
+#  - action: utter_ask_obligation
+#  - action: utter_how_can_i_help_more
+#  - intent: affirm
+#  - intent: ask_obligation
+#  - slot_was_set:
+#    - obligation_type: VAT
+#  - action: utter_ask_obligation
+#  - action: utter_how_can_i_help_more
+#  - intent: deny
+#  - intent: goodbye
+#  - action: utter_goodbye
 
 - story: search insight POSITIVE direct path
   steps:
