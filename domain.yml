@@ -47,16 +47,17 @@ actions:
   - utter_goodbye
   - utter_iamabot
   - query_obligation
+  - query_insight
 
 responses:
   utter_greet:
   - text: "Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?"
 
-  utter_ask_obligation:
-  - text: "Your VAT value to pay is 4606.0€"
+  #utter_ask_obligation:
+  #- text: "Your VAT value to pay is 4606.0€"
   
-  utter_ask_insight:
-  - text: "In the next 30 days, it will increase the disponibilities in 6000€"
+  #utter_ask_insight:
+  #- text: "In the next 30 days, it will increase the disponibilities in 6000€"
 
   utter_how_can_i_help_more:
   - text: "Can I help you more today?"
