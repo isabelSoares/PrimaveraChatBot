@@ -281,4 +281,4 @@ class DbQueryingMethods:
             return "There are no obligations matching your query."
         else:
             for row in random.sample(rows, 1):
-                return f"{row[3]}"
+                return f"I am showing a random insight: {row[3]}"
