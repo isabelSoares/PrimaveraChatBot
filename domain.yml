@@ -12,6 +12,7 @@ intents:
   - goodbye
   - ask_obligation
     #use_entities: true
+  - ask_date_obligation
   - ask_insight
   - affirm
   - deny
@@ -29,6 +30,7 @@ slots:
       - Social Security
       - Deductions
       - Compensation Fund
+    influence_conversation: false
 
   insight_type:
     type: categorical

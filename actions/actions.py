@@ -158,4 +158,4 @@ class DbQueryingMethods:
             return "There are no obligations matching your query."
         else:
             for row in random.sample(rows, 1):
-                return f"Try the {(row[4]).lower()} {row[0]} by {row[1]}. You can find it at {row[2]}."
+                return f"Your {row[2]} value to pay is {row[3]}€"
