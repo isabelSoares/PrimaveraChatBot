@@ -31,7 +31,7 @@ nlu:
     - bye bye
     - see you later
 
-- intent: ask_obligation
+- intent: ask_obligation_value_to_pay
   examples: |
     - how much is my [VAT](obligation_type)
     - how much I need to pay regarding [VAT](obligation_type)
@@ -47,7 +47,8 @@ nlu:
     - [April 2021](obligation_date_key)
     - [May 2021](obligation_date_key)
 
-- intent: ask_payment_date_obligation
+- intent: ask_obligation_payment_date
+  examples: |
     - until when can I pay my [VAT](obligation_type)
     - what is the limit of date that I can pay my [VAT](obligation_type)
     - until when can I pay my [Social Security](obligation_type)

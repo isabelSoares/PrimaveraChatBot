@@ -44,35 +44,6 @@ class QueryObligationType(Action):
 
         return 
 
-class QueryInsightType(Action):
-
-    def name(self) -> Text:
-        return "query_insight_type"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        """
-        Runs a query using only the type column, fuzzy matching against the
-        obligation_type slot. Outputs an utterance to the user w/ the relevent 
-        information for one of the returned rows.
-        """
-        conn_insights = create_connection_insights(self, db_file="../primavera_db/insightsDB")
-
-        slot_value = tracker.get_slot("insight_type")
-        slot_name = "ID"
-        
-        # adding fuzzy matching, fingers crossed
-        slot_value = DbQueryingMethods.get_closest_value(conn=conn_insights,
-            slot_name=slot_name,slot_value=slot_value)[0]
-
-        get_query_results = DbQueryingMethods.select_by_slot(conn=conn_insights,
-            slot_name=slot_name,slot_value=slot_value)
-        return_text = DbQueryingMethods.rows_info_as_text(get_query_results)
-        dispatcher.utter_message(text=str(return_text))
-
-        return 
-
 class QueryObligation(Action):
 
     def name(self) -> Text:
@@ -151,6 +122,36 @@ class QueryObligation(Action):
         year = date[1]
         return year + month_transformation
 
+class QueryInsightType(Action):
+
+    def name(self) -> Text:
+        return "query_insight_type"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        """
+        Runs a query using only the type column, fuzzy matching against the
+        obligation_type slot. Outputs an utterance to the user w/ the relevent 
+        information for one of the returned rows.
+        """
+        conn_insights = DbQueryingMethods.create_connection_insights(self, db_file="../primavera_db/insightsDB")
+
+        slot_value = tracker.get_slot("insight_type")
+        slot_name = "ID"
+        
+        # adding fuzzy matching, fingers crossed
+        slot_value = DbQueryingMethods.get_closest_value(conn=conn_insights,
+            slot_name=slot_name,slot_value=slot_value)[0]
+
+        get_query_results = DbQueryingMethods.select_by_slot(conn=conn_insights,
+            slot_name=slot_name,slot_value=slot_value)
+        return_text = DbQueryingMethods.rows_info_as_text(get_query_results)
+        dispatcher.utter_message(text=str(return_text))
+
+        return 
+
+
 class QueryInsight(Action):
 
     def name(self) -> Text:
@@ -188,41 +189,6 @@ class QueryInsight(Action):
 
         return
 
-class QueryAllInsightPerType(Action):
-
-    def name(self) -> Text:
-        return "query_all_insights_per_type"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        """
-        Runs a query using both the message & type columns (fuzzy matching against the
-        relevent slots). Finds all insights regarding a certain type
-        """
-        conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
-
-        # get matching entries for insight type
-        insight_type_value = tracker.get_slot("insight_type")
-        print("insight_type_value1:", insight_type_value)
-        # make sure we don't pass None to our fuzzy matcher
-        if insight_type_value == None:
-            insight_type_value = " "
-        insight_type_name = "TYPE"
-        
-        insight_type_value = DbQueryingMethods.get_closest_value_insights(conn_insights=conn_insights,
-            slot_name=insight_type_name,slot_value=insight_type_value)[0]
-        print("insight_type_value2:", insight_type_value)
-        query_results = DbQueryingMethods.select_by_slot_insights(conn_insights=conn_insights,
-            slot_name=insight_type_name,slot_value=insight_type_value)
-
-        return_text = DbQueryingMethods.rows_info_as_text_all_insights(query_results)
-        
-        # print results for user
-        dispatcher.utter_message(text=str(return_text))
-
-        return 
 
 class QueryAllInsights(Action):
 
@@ -259,6 +225,42 @@ class QueryAllInsights(Action):
 
         return 
 
+class QueryAllInsightsPerType(Action):
+
+    def name(self) -> Text:
+        return "query_all_insights_per_type"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        """
+        Runs a query using both the message & type columns (fuzzy matching against the
+        relevent slots). Finds all insights regarding a certain type
+        """
+        conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
+
+        # get matching entries for insight type
+        insight_type_value = tracker.get_slot("insight_type")
+        print("insight_type_value1:", insight_type_value)
+        # make sure we don't pass None to our fuzzy matcher
+        if insight_type_value == None:
+            insight_type_value = " "
+        insight_type_name = "TYPE"
+        
+        insight_type_value = DbQueryingMethods.get_closest_value_insights(conn_insights=conn_insights,
+            slot_name=insight_type_name,slot_value=insight_type_value)[0]
+        print("insight_type_value2:", insight_type_value)
+        query_results = DbQueryingMethods.select_by_slot_insights(conn_insights=conn_insights,
+            slot_name=insight_type_name,slot_value=insight_type_value)
+
+        return_text = DbQueryingMethods.rows_info_as_text_all_insights(query_results)
+        
+        # print results for user
+        dispatcher.utter_message(text=str(return_text))
+
+        return 
+
 class DbQueryingMethods:
     def create_connection_obligations(db_file):
         """ 
@@ -275,22 +277,6 @@ class DbQueryingMethods:
 
         return conn_obligations
 
-
-    def create_connection_insights(db_file):
-        """ 
-        create a database connection to the SQLite database
-        specified by the db_file
-        :param db_file: database file
-        :return: Connection object or None
-        """
-        conn_insights = None
-        try:
-            conn_insights = sqlite3.connect(db_file)
-        except Error as e:
-            print(e)
-
-        return conn_insights
-
     def get_closest_value_obligations(conn_obligations, slot_name, slot_value):
         """ Given a database column & text input, find the closest 
         match for the input in the column.
@@ -304,20 +290,6 @@ class DbQueryingMethods:
         top_match_obligations = process.extractOne(slot_value, column_values_obligations)
 
         return(top_match_obligations[0])
-
-    def get_closest_value_insights(conn_insights, slot_name, slot_value):
-        """ Given a database column & text input, find the closest 
-        match for the input in the column.
-        """
-        # get a list of all distinct values from our target column
-        fuzzy_match_cur_insights = conn_insights.cursor()
-        fuzzy_match_cur_insights.execute(f"""SELECT DISTINCT {slot_name} 
-                                FROM dataInsights""")
-        column_values_insights = fuzzy_match_cur_insights.fetchall()
-
-        top_match_insights = process.extractOne(slot_value, column_values_insights)
-
-        return(top_match_insights[0])
 
     # slot_name is column
     def select_by_slot_obligations(conn_obligations, slot_name, slot_value):
@@ -335,6 +307,48 @@ class DbQueryingMethods:
 
         return(rows_obligations)
 
+    def rows_info_as_text_obligations(rows):
+        """
+        Return one of the rows (randomly selected) passed in 
+        as a human-readable text. If there are no rows, returns
+        text to that effect.
+        """
+        if len(list(rows)) < 1:
+            return "There are no obligations matching your query."
+        else:
+            for row in random.sample(rows, 1):
+                return f"Your {row[2]} value to pay is {row[3]}€"
+                
+    def create_connection_insights(db_file):
+        """ 
+        create a database connection to the SQLite database
+        specified by the db_file
+        :param db_file: database file
+        :return: Connection object or None
+        """
+        conn_insights = None
+        try:
+            conn_insights = sqlite3.connect(db_file)
+        except Error as e:
+            print(e)
+
+        return conn_insights
+
+    def get_closest_value_insights(conn_insights, slot_name, slot_value):
+        """ Given a database column & text input, find the closest 
+        match for the input in the column.
+        """
+        # get a list of all distinct values from our target column
+        fuzzy_match_cur_insights = conn_insights.cursor()
+        fuzzy_match_cur_insights.execute(f"""SELECT DISTINCT {slot_name} 
+                                FROM dataInsights""")
+        column_values_insights = fuzzy_match_cur_insights.fetchall()
+
+        top_match_insights = process.extractOne(slot_value, column_values_insights)
+
+        return(top_match_insights[0])
+
+
     def select_by_slot_insights(conn_insights, slot_name, slot_value):
         """
         Query all rows in the tasks table
@@ -349,18 +363,6 @@ class DbQueryingMethods:
         rows_insights = cur_insights.fetchall()
 
         return(rows_insights)
-
-    def rows_info_as_text_obligations(rows):
-        """
-        Return one of the rows (randomly selected) passed in 
-        as a human-readable text. If there are no rows, returns
-        text to that effect.
-        """
-        if len(list(rows)) < 1:
-            return "There are no obligations matching your query."
-        else:
-            for row in random.sample(rows, 1):
-                return f"Your {row[2]} value to pay is {row[3]}€"
 
     def rows_info_as_text_insights(rows):
         """
@@ -384,7 +386,6 @@ class DbQueryingMethods:
         if len(list(rows)) < 1:
             return "There are no insights matching your query."
         else:
-            print("nr", len(rows))
             end_answer = ""
             for row in rows:
                 answer = f"A {row[2]} INSIGHT: {row[3]}"

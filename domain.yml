@@ -10,10 +10,10 @@ session_config:
 intents:
   - greet
   - goodbye
-  - ask_obligation
+  - ask_obligation_value_to_pay
     #use_entities: true
   - give_date_key
-  - ask_date_obligation
+  - ask_obligation_payment_date
   - ask_insight
   - ask_all_insights
   - ask_all_insights_per_type 
@@ -52,13 +52,11 @@ slots:
 
 actions:
   - utter_greet
+  - utter_ask_date
   - utter_how_can_i_help_more
-  - utter_ask_obligation
-  - utter_ask_insight
   - utter_goodbye
   - utter_iamabot
   - query_obligation
-  - utter_ask_date
   - query_insight
   - query_all_insights
   - query_all_insights_per_type

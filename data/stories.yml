@@ -1,11 +1,11 @@
 version: "2.0"
 
 stories:
-- story: search obligation
+- story: search obligation ask a value to pay
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: ask_obligation
+  - intent: ask_obligation_value_to_pay
   - action: utter_ask_date
   - intent: give_date_key
   - action: query_obligation
