@@ -1,37 +1,20 @@
 version: "2.0"
 
 stories:
-- story: search obligation direct path
+- story: search obligation
   steps:
   - intent: greet
   - action: utter_greet
   - intent: ask_obligation
-  - action: query_obligation #utter_ask_obligation 
+  - action: utter_ask_date
+  - intent: give_date_key
+  - action: query_obligation
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
   - action: utter_goodbye
 
-#- story: search obligation VAT indirect path
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: ask_obligation
-#  - slot_was_set:
-#    - obligation_type: VAT 
-#  - action: utter_ask_obligation
-#  - action: utter_how_can_i_help_more
-#  - intent: affirm
-#  - intent: ask_obligation
-#  - slot_was_set:
-#    - obligation_type: VAT
-#  - action: utter_ask_obligation
-#  - action: utter_how_can_i_help_more
-#  - intent: deny
-#  - intent: goodbye
-#  - action: utter_goodbye
-
-- story: search insight direct path
+- story: search insight
   steps:
   - intent: greet
   - action: utter_greet
@@ -42,17 +25,3 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-#- story: search insight POSITIVE indirect path
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: ask_insight
-#  - action: utter_ask_insight
-#  - action: utter_how_can_i_help_more
-#  - intent: affirm
-#  - intent: ask_insight
-#  - action: utter_ask_insight
-#  - action: utter_how_can_i_help_more
-#  - intent: deny
-#  - intent: goodbye
-#  - action: utter_goodbye

@@ -12,6 +12,7 @@ intents:
   - goodbye
   - ask_obligation
     #use_entities: true
+  - give_date_key
   - ask_date_obligation
   - ask_insight
   - affirm
@@ -20,6 +21,7 @@ intents:
 
 entities:
   - obligation_type
+  - obligation_date_key
   - insight_type
 
 slots:  
@@ -30,6 +32,13 @@ slots:
       - Social Security
       - Deductions
       - Compensation Fund
+    influence_conversation: false
+
+  obligation_date_key:
+    type: categorical
+    values:
+      - "April 2021"
+      - "May 2021"
     influence_conversation: false
 
   insight_type:
@@ -47,17 +56,15 @@ actions:
   - utter_goodbye
   - utter_iamabot
   - query_obligation
+  - utter_ask_date
   - query_insight
 
 responses:
   utter_greet:
   - text: "Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?"
 
-  #utter_ask_obligation:
-  #- text: "Your VAT value to pay is 4606.0€"
-  
-  #utter_ask_insight:
-  #- text: "In the next 30 days, it will increase the disponibilities in 6000€"
+  utter_ask_date:
+  - text: "Which date do you want?"
 
   utter_how_can_i_help_more:
   - text: "Can I help you more today?"

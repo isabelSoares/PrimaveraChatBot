@@ -83,9 +83,9 @@ class QueryObligation(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         """
-        Runs a query using both the value_to_pay & type columns (fuzzy matching against the
+        Runs a query using both the date_key & type columns (fuzzy matching against the
         relevent slots). Finds a match for both if possible, otherwise a match for the
-        type only, value_to_pay only in that order. Output is an utterance directly to the
+        type only, date_key only in that order. Output is an utterance directly to the
         user with a randomly selected matching row.
         """
         conn_obligations = DbQueryingMethods.create_connection_obligations(db_file="./primavera_db/obligationsDB")
@@ -100,36 +100,56 @@ class QueryObligation(Action):
         obligation_type_value = DbQueryingMethods.get_closest_value_obligations(conn_obligations=conn_obligations,
             slot_name=obligation_type_name,slot_value=obligation_type_value)[0]
         print("obligation_type_value2:", obligation_type_value)
-        query_results = DbQueryingMethods.select_by_slot_obligations(conn_obligations=conn_obligations,
+        query_results_type = DbQueryingMethods.select_by_slot_obligations(conn_obligations=conn_obligations,
             slot_name=obligation_type_name,slot_value=obligation_type_value)
 
-        '''
+         # get matching for date key from obligations
+        obligation_date_key_value_element = tracker.get_slot("obligation_date_key")
+        # transform the date given by user in order that date is equal to date_key on the database
+        obligation_date_key_value = self.transform_date(obligation_date_key_value_element)
+        # make sure we don't pass None to our fuzzy matcher
+        if obligation_date_key_value == None:
+            obligation_date_key_value = " "
+        obligation_date_key_name = "DATEKEY"
+        obligation_date_key_value = DbQueryingMethods.get_closest_value_obligations(conn_obligations=conn_obligations,    
+            slot_name=obligation_date_key_name,slot_value=obligation_date_key_value)[0]
+        query_results_date_key = DbQueryingMethods.select_by_slot_obligations(conn_obligations=conn_obligations,
+            slot_name=obligation_date_key_name,slot_value=obligation_date_key_value)
+        
         # intersection of two queries
-        value_to_pay_set = collections.Counter(query_results_value_to_pay)
+        date_key_set = collections.Counter(query_results_date_key)
         type_set =  collections.Counter(query_results_type)
 
-        query_results_overlap = list((value_to_pay_set & type_set).elements())
+        query_results_overlap = list((date_key_set & type_set).elements())
 
         # apology for not having the right info
         apology = "I couldn't find exactly what you wanted, but you might like this."
 
-        # return info for both, or value_to_pay match or type match or nothing
+        # return info for both, or date_key match or type match or nothing
         if len(query_results_overlap)>0:
-            return_text = DbQueryingMethods.rows_info_as_text(query_results_overlap)
-        elif len(list(query_results_value_to_pay))>0:
-            return_text = apology + DbQueryingMethods.rows_info_as_text(query_results_value_to_pay)
+            return_text = DbQueryingMethods.rows_info_as_text_obligations(query_results_overlap)
+        elif len(list(query_results_date_key))>0:
+            return_text = apology + DbQueryingMethods.rows_info_as_text_obligations(query_results_date_key)
         elif len(list(query_results_type))>0:
-            return_text = apology + DbQueryingMethods.rows_info_as_text(query_results_type)
+            return_text = apology + DbQueryingMethods.rows_info_as_text_obligations(query_results_type)
         else:
-            return_text = DbQueryingMethods.rows_info_as_text(query_results_overlap)
-        '''
+            return_text = DbQueryingMethods.rows_info_as_text_obligations(query_results_overlap)
+        
 
-        return_text = DbQueryingMethods.rows_info_as_text_obligations(query_results)
+        return_text = DbQueryingMethods.rows_info_as_text_obligations(query_results_overlap)
         
         # print results for user
         dispatcher.utter_message(text=str(return_text))
 
         return
+    
+    def transform_date(self, sample_str):
+        date = sample_str.split()
+        month = date[0]
+        months = {"January" : "01", "February" : "02", "March" : "03", "April" : "04", "May" : "05", "June" : "06", "July" : "07", "August" : "08", "September" : "09", "October" : "10", "November" : "11", "December" : "12" }
+        month_transformation = months[month]
+        year = date[1]
+        return year + month_transformation
 
 class QueryInsight(Action):
 
@@ -261,7 +281,7 @@ class DbQueryingMethods:
 
     def rows_info_as_text_obligations(rows):
         """
-        Return one of the rows (randomly sele cted) passed in 
+        Return one of the rows (randomly selected) passed in 
         as a human-readable text. If there are no rows, returns
         text to that effect.
         """
@@ -273,7 +293,7 @@ class DbQueryingMethods:
 
     def rows_info_as_text_insights(rows):
         """
-        Return one of the rows (randomly sele cted) passed in 
+        Return one of the rows (randomly selected) passed in 
         as a human-readable text. If there are no rows, returns
         text to that effect.
         """
