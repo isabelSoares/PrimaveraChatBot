@@ -14,12 +14,23 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: search insight
+- story: search a random insight
   steps:
   - intent: greet
   - action: utter_greet
   - intent: ask_insight
   - action: query_insight
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: search all insights
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_all_insights
+  - action: query_all_insights
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye

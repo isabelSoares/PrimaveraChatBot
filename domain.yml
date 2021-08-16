@@ -15,6 +15,7 @@ intents:
   - give_date_key
   - ask_date_obligation
   - ask_insight
+  - ask_all_insights
   - affirm
   - deny
   - bot_challenge
@@ -58,6 +59,7 @@ actions:
   - query_obligation
   - utter_ask_date
   - query_insight
+  - query_all_insights
 
 responses:
   utter_greet:

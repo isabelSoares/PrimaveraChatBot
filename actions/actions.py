@@ -168,7 +168,7 @@ class QueryInsight(Action):
         """
         conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
 
-        # get matching entries for obligation type
+        # get matching entries for insight type
         insight_type_value = tracker.get_slot("insight_type")
         print("insight_type_value1:", insight_type_value)
         # make sure we don't pass None to our fuzzy matcher
@@ -185,6 +185,41 @@ class QueryInsight(Action):
         
         # print results for user
         dispatcher.utter_message(text=str(return_text))
+
+        return 
+
+class QueryAllInsights(Action):
+
+    def name(self) -> Text:
+        return "query_all_insights"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        """
+        Runs a query using both the message & type columns (fuzzy matching against the
+        relevent slots). Finds a match for both if possible, otherwise a match for the
+        type only, messages only in that order. Output is an utterance directly to the
+        user with a randomly selected matching row.
+        """
+        conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
+
+        types = ['POSITIVE', 'NEGATIVE', 'MEDIUM']
+        insight_type_name = "TYPE"
+        final_return_value = ''
+        for type in types:
+            insight_type_value = DbQueryingMethods.get_closest_value_insights(conn_insights=conn_insights,
+                slot_name=insight_type_name,slot_value=type)[0]
+            print("insight_type_value2:", insight_type_value)
+            query_results = DbQueryingMethods.select_by_slot_insights(conn_insights=conn_insights,
+                slot_name=insight_type_name,slot_value=insight_type_value)
+
+            return_text = DbQueryingMethods.rows_info_as_text_all_insights(query_results)
+            final_return_value += return_text
+        
+        # print results for user
+        dispatcher.utter_message(text=str(final_return_value))
 
         return 
 
@@ -298,7 +333,24 @@ class DbQueryingMethods:
         text to that effect.
         """
         if len(list(rows)) < 1:
-            return "There are no obligations matching your query."
+            return "There are no insights matching your query."
         else:
+
             for row in random.sample(rows, 1):
                 return f"I am showing a random insight: {row[3]}"
+
+    def rows_info_as_text_all_insights(rows):
+        """
+        Return one of the rows (randomly selected) passed in 
+        as a human-readable text. If there are no rows, returns
+        text to that effect.
+        """
+        if len(list(rows)) < 1:
+            return "There are no insights matching your query."
+        else:
+            print("nr", len(rows))
+            end_answer = ""
+            for row in rows:
+                answer = f"A {row[2]} INSIGHT: {row[3]}"
+                end_answer = end_answer + answer + "\n"
+            return end_answer
