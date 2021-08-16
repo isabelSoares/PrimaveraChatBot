@@ -1,78 +1,64 @@
-version: "2.0"
-
-#config:
-#  store_entities_as_slots: true
-
+version: '2.0'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
-
 intents:
-  - greet
-  - goodbye
-  - ask_obligation_value_to_pay
-    #use_entities: true
-  - give_date_key
-  - ask_obligation_payment_date
-  - ask_insight
-  - ask_all_insights
-  - ask_all_insights_per_type 
-  - affirm
-  - deny
-  - bot_challenge
-
+- give_date_key
+- ask_obligation_payment_date
+- goodbye
+- greet
+- ask_obligation_value_to_pay
+- ask_insight
+- ask_all_insights
+- ask_all_insights_per_type
+- affirm
+- deny
+- bot_challenge
 entities:
-  - obligation_type
-  - obligation_date_key
-  - insight_type
-
-slots:  
+- insight_type
+- obligation_date_key
+- obligation_type
+slots:
   obligation_type:
     type: categorical
-    values:
-      - VAT
-      - Social Security
-      - Deductions
-      - Compensation Fund
     influence_conversation: false
-
+    values:
+    - vat
+    - social security
+    - deductions
+    - compensation fund
   obligation_date_key:
     type: categorical
-    values:
-      - "April 2021"
-      - "May 2021"
     influence_conversation: false
-
+    values:
+    - april 2021
+    - may 2021
   insight_type:
     type: categorical
-    values: 
-      - positive
-      - medium
-      - negative
-
-actions:
-  - utter_greet
-  - utter_ask_date
-  - utter_how_can_i_help_more
-  - utter_goodbye
-  - utter_iamabot
-  - query_obligation
-  - query_insight
-  - query_all_insights
-  - query_all_insights_per_type
-
+    influence_conversation: true
+    values:
+    - positive
+    - medium
+    - negative
 responses:
   utter_greet:
-  - text: "Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?"
-
+  - text: Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?
   utter_ask_date:
-  - text: "Which date do you want?"
-
+  - text: Which date do you want?
   utter_how_can_i_help_more:
-  - text: "Can I help you more today?"
-
+  - text: Can I help you more today?
   utter_goodbye:
-  - text: "Bye"
-
+  - text: Bye
   utter_iamabot:
-  - text: "I am a PrimaveraChatBot, powered by Rasa."
+  - text: I am a PrimaveraChatBot, powered by Rasa.
+actions:
+- query_all_insights
+- query_all_insights_per_type
+- query_insight
+- query_obligation_payment_date
+- query_obligation_value_to_pay
+- utter_ask_date
+- utter_goodbye
+- utter_greet
+- utter_how_can_i_help_more
+- utter_iamabot

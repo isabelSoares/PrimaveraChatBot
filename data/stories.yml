@@ -8,7 +8,20 @@ stories:
   - intent: ask_obligation_value_to_pay
   - action: utter_ask_date
   - intent: give_date_key
-  - action: query_obligation
+  - action: query_obligation_value_to_pay
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: search obligation ask payment date
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_obligation_payment_date
+  - action: utter_ask_date
+  - intent: give_date_key
+  - action: query_obligation_payment_date
   - action: utter_how_can_i_help_more
   - intent: deny
   - intent: goodbye
@@ -47,3 +60,23 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+
+#- story: interactive_story_1
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: ask_obligation_payment_date
+#    entities:
+#    - obligation_type: VAT
+#  - slot_was_set:
+#    - obligation_type: VAT
+#  - action: utter_ask_date
+#  - intent: give_date_key
+#    entities:
+#    - obligation_date_key: April 2021
+#  - slot_was_set:
+#    - obligation_date_key: April 2021
+#  - action: query_obligation_payment_date
+#  - action: utter_how_can_i_help_more
+#  - intent: goodbye
+#  - action: utter_goodbye
