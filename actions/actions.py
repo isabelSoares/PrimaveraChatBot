@@ -186,6 +186,42 @@ class QueryInsight(Action):
         # print results for user
         dispatcher.utter_message(text=str(return_text))
 
+        return
+
+class QueryAllInsightPerType(Action):
+
+    def name(self) -> Text:
+        return "query_all_insights_per_type"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        """
+        Runs a query using both the message & type columns (fuzzy matching against the
+        relevent slots). Finds all insights regarding a certain type
+        """
+        conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
+
+        # get matching entries for insight type
+        insight_type_value = tracker.get_slot("insight_type")
+        print("insight_type_value1:", insight_type_value)
+        # make sure we don't pass None to our fuzzy matcher
+        if insight_type_value == None:
+            insight_type_value = " "
+        insight_type_name = "TYPE"
+        
+        insight_type_value = DbQueryingMethods.get_closest_value_insights(conn_insights=conn_insights,
+            slot_name=insight_type_name,slot_value=insight_type_value)[0]
+        print("insight_type_value2:", insight_type_value)
+        query_results = DbQueryingMethods.select_by_slot_insights(conn_insights=conn_insights,
+            slot_name=insight_type_name,slot_value=insight_type_value)
+
+        return_text = DbQueryingMethods.rows_info_as_text_all_insights(query_results)
+        
+        # print results for user
+        dispatcher.utter_message(text=str(return_text))
+
         return 
 
 class QueryAllInsights(Action):
@@ -337,7 +373,7 @@ class DbQueryingMethods:
         else:
 
             for row in random.sample(rows, 1):
-                return f"I am showing a random insight: {row[3]}"
+                return f"I AM SHOWING A RANDOM INSIGHT: {row[3]}"
 
     def rows_info_as_text_all_insights(rows):
         """

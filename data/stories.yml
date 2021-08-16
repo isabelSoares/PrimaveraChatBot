@@ -36,3 +36,14 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+- story: search all insights per type
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_all_insights_per_type
+  - action: query_all_insights_per_type
+  - action: utter_how_can_i_help_more
+  - intent: deny
+  - intent: goodbye
+  - action: utter_goodbye
+

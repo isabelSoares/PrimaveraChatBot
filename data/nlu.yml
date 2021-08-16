@@ -68,6 +68,12 @@ nlu:
     - Show me all insights.
     - Show all insights.
 
+- intent: ask_all_insights_per_type
+  examples: |
+    - Show me all positive insights.
+    - Show me all medium insights.
+    - Show me all negative insights.
+
 - intent: affirm
   examples: |
     - yes
