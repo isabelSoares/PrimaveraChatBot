@@ -3,80 +3,66 @@ version: "2.0"
 stories:
 - story: search obligation ask a value to pay
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: ask_obligation_value_to_pay
   - action: utter_ask_date
   - intent: give_date_key
   - action: query_obligation_value_to_pay
   - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
-  - action: utter_goodbye
 
 - story: search obligation ask payment date
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: ask_obligation_payment_date
   - action: utter_ask_date
   - intent: give_date_key
   - action: query_obligation_payment_date
   - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
-  - action: utter_goodbye
 
 - story: search a random insight
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: ask_insight
   - action: query_insight
   - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
-  - action: utter_goodbye
 
 - story: search all insights
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: ask_all_insights
   - action: query_all_insights
   - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
-  - action: utter_goodbye
 
 - story: search all insights per type
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: ask_all_insights_per_type
   - action: query_all_insights_per_type
   - action: utter_how_can_i_help_more
-  - intent: deny
-  - intent: goodbye
+
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_obligation_value_to_pay
+    entities:
+    - obligation_type: vat
+  - slot_was_set:
+    - obligation_type: vat
+  - action: utter_ask_date
+  - intent: give_date_key
+    entities:
+    - obligation_date_key: April 2021
+  - slot_was_set:
+    - obligation_date_key: April 2021
+  - action: query_obligation_value_to_pay
+  - action: utter_how_can_i_help_more
+  - intent: ask_obligation_value_to_pay
+    entities:
+    - obligation_type: Social Security
+  - slot_was_set:
+    - obligation_type: Social Security
+  - action: utter_ask_date
+  - intent: give_date_key
+    entities:
+    - obligation_date_key: May 2021
+  - slot_was_set:
+    - obligation_date_key: May 2021
+  - action: query_obligation_value_to_pay
   - action: utter_goodbye
-
-
-#- story: interactive_story_1
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: ask_obligation_payment_date
-#    entities:
-#    - obligation_type: VAT
-#  - slot_was_set:
-#    - obligation_type: VAT
-#  - action: utter_ask_date
-#  - intent: give_date_key
-#    entities:
-#    - obligation_date_key: April 2021
-#  - slot_was_set:
-#    - obligation_date_key: April 2021
-#  - action: query_obligation_payment_date
-#  - action: utter_how_can_i_help_more
-#  - intent: goodbye
-#  - action: utter_goodbye
