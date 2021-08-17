@@ -47,7 +47,7 @@ class QueryObligationType(Action):
 class QueryObligationValueToPay(Action):
 
     def name(self) -> Text:
-        return "query_obligation_value_to_pay"
+        return "query_value_to_pay_obligation"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -127,7 +127,7 @@ class QueryObligationValueToPay(Action):
 class QueryObligationPaymentDate(Action):
 
     def name(self) -> Text:
-        return "query_obligation_payment_date"
+        return "query_payment_date_obligation"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,

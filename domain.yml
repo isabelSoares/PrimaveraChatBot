@@ -4,10 +4,10 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - greet
-- ask_obligation_value_to_pay
+- ask_payment_date_obligation
 - give_date_key
+- ask_value_to_pay_obligation
 - goodbye
-- ask_obligation_payment_date
 - ask_insight
 - ask_all_insights
 - ask_all_insights_per_type
@@ -44,7 +44,7 @@ responses:
   utter_greet:
   - text: Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?
   utter_ask_date:
-  - text: Which date do you want?
+  - text: Which date do you want? Insert "Month year"
   utter_how_can_i_help_more:
   - text: Can I help you more today?
   utter_goodbye:
@@ -55,8 +55,8 @@ actions:
 - query_all_insights
 - query_all_insights_per_type
 - query_insight
-- query_obligation_payment_date
-- query_obligation_value_to_pay
+- query_payment_date_obligation
+- query_value_to_pay_obligation
 - utter_ask_date
 - utter_goodbye
 - utter_greet

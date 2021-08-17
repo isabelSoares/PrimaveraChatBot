@@ -3,18 +3,18 @@ version: "2.0"
 stories:
 - story: search obligation ask a value to pay
   steps:
-  - intent: ask_obligation_value_to_pay
+  - intent: ask_value_to_pay_obligation
   - action: utter_ask_date
   - intent: give_date_key
-  - action: query_obligation_value_to_pay
+  - action: query_value_to_pay_obligation
   - action: utter_how_can_i_help_more
 
 - story: search obligation ask payment date
   steps:
-  - intent: ask_obligation_payment_date
+  - intent: ask_payment_date_obligation
   - action: utter_ask_date
   - intent: give_date_key
-  - action: query_obligation_payment_date
+  - action: query_payment_date_obligation
   - action: utter_how_can_i_help_more
 
 - story: search a random insight
@@ -35,34 +35,3 @@ stories:
   - action: query_all_insights_per_type
   - action: utter_how_can_i_help_more
 
-
-- story: interactive_story_1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ask_obligation_value_to_pay
-    entities:
-    - obligation_type: vat
-  - slot_was_set:
-    - obligation_type: vat
-  - action: utter_ask_date
-  - intent: give_date_key
-    entities:
-    - obligation_date_key: April 2021
-  - slot_was_set:
-    - obligation_date_key: April 2021
-  - action: query_obligation_value_to_pay
-  - action: utter_how_can_i_help_more
-  - intent: ask_obligation_value_to_pay
-    entities:
-    - obligation_type: Social Security
-  - slot_was_set:
-    - obligation_type: Social Security
-  - action: utter_ask_date
-  - intent: give_date_key
-    entities:
-    - obligation_date_key: May 2021
-  - slot_was_set:
-    - obligation_date_key: May 2021
-  - action: query_obligation_value_to_pay
-  - action: utter_goodbye
