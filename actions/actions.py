@@ -14,6 +14,7 @@ from rasa_sdk.executor import CollectingDispatcher
 import sqlite3
 import random
 from fuzzywuzzy import process
+from dateutil.parser import parse
 
 class QueryObligationType(Action):
 
@@ -118,13 +119,8 @@ class QueryObligationValueToPay(Action):
 
         return
     
-    def transform_date(self, sample_str):
-        date = sample_str.split()
-        month = date[0].lower()
-        months = {"january" : "01", "february" : "02", "march" : "03", "april" : "04", "may" : "05", "june" : "06", "july" : "07", "august" : "08", "september" : "09", "october" : "10", "november" : "11", "december" : "12" }
-        month_transformation = months[month]
-        year = date[1]
-        return year + month_transformation
+    def transform_date(self, sample_str):   
+        return parse(sample_str).strftime("%Y%m")
 
 class QueryObligationPaymentDate(Action):
 
@@ -198,12 +194,7 @@ class QueryObligationPaymentDate(Action):
         return
    
     def transform_date(self, sample_str):
-        date = sample_str.split()
-        month = date[0].lower()
-        months = {"january" : "01", "february" : "02", "march" : "03", "april" : "04", "may" : "05", "june" : "06", "july" : "07", "august" : "08", "september" : "09", "october" : "10", "november" : "11", "december" : "12" }
-        month_transformation = months[month]
-        year = date[1]
-        return year + month_transformation
+        return parse(sample_str).strftime("%Y%m")
 
 class QueryInsightType(Action):
 
