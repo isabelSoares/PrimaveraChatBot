@@ -28,11 +28,8 @@ slots:
     - deductions
     - compensation fund
   obligation_date_key:
-    type: categorical
+    type: text
     influence_conversation: false
-    values:
-    - april 2021
-    - may 2021
   insight_type:
     type: categorical
     influence_conversation: true

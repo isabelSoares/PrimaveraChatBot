@@ -12,7 +12,7 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Say greet anytime the user says 
+- rule: Say greet anytime the user says greet
   steps:
   - intent: greet
   - action: utter_greet

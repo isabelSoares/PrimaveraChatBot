@@ -78,8 +78,10 @@ class QueryObligationValueToPay(Action):
 
          # get matching for date key from obligations
         obligation_date_key_value_element = tracker.get_slot("obligation_date_key")
+        #print("Slot:", obligation_date_key_value_element)
         # transform the date given by user in order that date is equal to date_key on the database
         obligation_date_key_value = self.transform_date(obligation_date_key_value_element)
+
         # make sure we don't pass None to our fuzzy matcher
         if obligation_date_key_value == None:
             obligation_date_key_value = " "
@@ -118,8 +120,8 @@ class QueryObligationValueToPay(Action):
     
     def transform_date(self, sample_str):
         date = sample_str.split()
-        month = date[0]
-        months = {"January" : "01", "February" : "02", "March" : "03", "April" : "04", "May" : "05", "June" : "06", "July" : "07", "August" : "08", "September" : "09", "October" : "10", "November" : "11", "December" : "12" }
+        month = date[0].lower()
+        months = {"january" : "01", "february" : "02", "march" : "03", "april" : "04", "may" : "05", "june" : "06", "july" : "07", "august" : "08", "september" : "09", "october" : "10", "november" : "11", "december" : "12" }
         month_transformation = months[month]
         year = date[1]
         return year + month_transformation
@@ -155,7 +157,8 @@ class QueryObligationPaymentDate(Action):
             slot_name=obligation_type_name,slot_value=obligation_type_value)
 
          # get matching for date key from obligations
-        obligation_date_key_value_element = tracker.get_slot("obligation_date_key")
+        obligation_date_key_value_element = tracker.get_slot("obligation_date_key")       
+        #print("Slot:", obligation_date_key_value_element)
         # transform the date given by user in order that date is equal to date_key on the database
         obligation_date_key_value = self.transform_date(obligation_date_key_value_element)
         # make sure we don't pass None to our fuzzy matcher
@@ -193,11 +196,11 @@ class QueryObligationPaymentDate(Action):
         dispatcher.utter_message(text=str(return_text))
 
         return
-    
+   
     def transform_date(self, sample_str):
         date = sample_str.split()
-        month = date[0]
-        months = {"January" : "01", "February" : "02", "March" : "03", "April" : "04", "May" : "05", "June" : "06", "July" : "07", "August" : "08", "September" : "09", "October" : "10", "November" : "11", "December" : "12" }
+        month = date[0].lower()
+        months = {"january" : "01", "february" : "02", "march" : "03", "april" : "04", "may" : "05", "june" : "06", "july" : "07", "august" : "08", "september" : "09", "october" : "10", "november" : "11", "december" : "12" }
         month_transformation = months[month]
         year = date[1]
         return year + month_transformation
