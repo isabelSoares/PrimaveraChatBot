@@ -35,11 +35,16 @@ slots:
     influence_conversation: true
     values:
     - positive
-    - medium
+    - neutral
     - negative
 responses:
   utter_greet:
-  - text: Hey! I am a PrimaveraChatBot, powered by Rasa. How can I help you today?
+  - text: |
+          Hey! I am a PrimaveraChatBot, powered by Rasa. I am configurated to answer about business data, for instance: 
+          How much is my VAT
+          Until when can I pay my VAT
+          Show me all insights, among others.
+          How can I help you today?
   utter_ask_date:
   - text: Which date do you want? Insert "Month year"
   utter_how_can_i_help_more:

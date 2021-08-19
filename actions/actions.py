@@ -60,9 +60,7 @@ class QueryObligationValueToPay(Action):
         type only, date_key only in that order. Output is an utterance directly to the
         user with a randomly selected matching row.
         """
-        print("Hello1value")
         conn_obligations = DbQueryingMethods.create_connection_obligations(db_file="./primavera_db/obligationsDB")
-        print("Hello2value")
 
         # get matching entries for obligation type
         obligation_type_value = tracker.get_slot("obligation_type")
@@ -281,7 +279,7 @@ class QueryAllInsights(Action):
         """
         conn_insights = DbQueryingMethods.create_connection_insights(db_file="./primavera_db/insightsDB")
 
-        types = ['POSITIVE', 'NEGATIVE', 'MEDIUM']
+        types = ['POSITIVE', 'NEGATIVE', 'NEUTRAL']
         insight_type_name = "TYPE"
         final_return_value = ''
         for type in types:
