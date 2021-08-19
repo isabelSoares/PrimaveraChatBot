@@ -389,7 +389,11 @@ class DbQueryingMethods:
             return "There are no obligations matching your query."
         else:
             for row in random.sample(rows, 1):
-                return f"Your {row[2]} value to pay is {row[3]}€"
+                year = row[0]//100
+                month = row[0]%100
+                months = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
+                month_transformation = months[month]
+                return f"Your {row[2]} value to pay for {month_transformation} {year} is {row[3]}€"
 
     def rows_info_as_text_obligations_payment_date(rows):
         """
@@ -401,7 +405,11 @@ class DbQueryingMethods:
             return "There are no obligations matching your query."
         else:
             for row in random.sample(rows, 1):
-                return f"You should pay your {row[2]} until {row[4]}."
+                year = row[0]//100
+                month = row[0]%100
+                months = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
+                month_transformation = months[month]
+                return f"You should pay your {row[2]} for {month_transformation} {year} until {row[4]}."
                 
     def create_connection_insights(db_file):
         """ 
