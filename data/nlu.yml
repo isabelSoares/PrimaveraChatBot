@@ -71,9 +71,9 @@ nlu:
 
 - intent: ask_all_insights_per_type
   examples: |
-    - Show me all positive insights.
-    - Show me all neutral insights.
-    - Show me all negative insights.
+    - Show me all [positive](insight_type) insights.
+    - Show me all [neutral](insight_type) insights.
+    - Show me all [negative](insight_type) insights.
 
 - intent: affirm
   examples: |
