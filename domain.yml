@@ -7,6 +7,7 @@ intents:
 - ask_payment_date_obligation
 - give_date_key
 - ask_value_to_pay_obligation
+- thank
 - goodbye
 - ask_insight
 - ask_all_insights
@@ -40,11 +41,13 @@ slots:
 responses:
   utter_greet:
   - text: |
-          Hey! I am a PrimaveraChatBot, powered by Rasa. I am configurated to answer about business data, for instance: 
-          How much is my VAT
-          Until when can I pay my VAT
-          Show me all insights, among others.
-          How can I help you today?
+      Hey! I am a PrimaveraChatBot, powered by Rasa. I am configurated to answer about business data, for instance: 
+      How much is my VAT
+      Until when can I pay my VAT
+      Show me all insights, among others.
+      How can I help you today?
+  utter_thank:
+  - text: You are welcome!
   utter_ask_date:
   - text: Which date do you want? Insert "Month year"
   utter_how_can_i_help_more:
@@ -64,3 +67,4 @@ actions:
 - utter_greet
 - utter_how_can_i_help_more
 - utter_iamabot
+- utter_thank

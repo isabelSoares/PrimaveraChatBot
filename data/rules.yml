@@ -16,3 +16,8 @@ rules:
   steps:
   - intent: greet
   - action: utter_greet
+
+- rule: Say 'you are welcome' anytime the user says thank you
+  steps:
+  - intent: thank
+  - action: utter_thank

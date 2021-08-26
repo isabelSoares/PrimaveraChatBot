@@ -1,5 +1,4 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
@@ -16,7 +15,7 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
+    - hi dude
 - intent: goodbye
   examples: |
     - good afternoon
@@ -30,23 +29,31 @@ nlu:
     - see you around
     - bye bye
     - see you later
-
+- intent: thank
+  examples: |
+    - thank you
+    - thanks
+    - thank you very much
+    - thank you very much for giving so much information
+    - thank you so much for all this information
 - intent: ask_value_to_pay_obligation
   examples: |
     - how much is my [VAT](obligation_type)
     - how much I need to pay regarding [VAT](obligation_type)
     - how much is my [Social Security](obligation_type)
     - how much I need to pay regarding [Social Security](obligation_type)
-    - how much is my [Deductions](obligation_type) 
+    - how much is my [Deductions](obligation_type)
     - how much I need to pay regarding [Deductions](obligation_type)
     - how much is my [Compensation Fund](obligation_type)
     - how much I need to pay regarding [Compensation Fund](obligation_type)
-
 - intent: give_date_key
   examples: |
     - [April 2021](obligation_date_key)
     - [May 2021](obligation_date_key)
-
+    - [april 2021](obligation_date_key)
+    - [may 2021](obligation_date_key)
+    - [042021](obligation_date_key)
+    - [052021](obligation_date_key)
 - intent: ask_payment_date_obligation
   examples: |
     - until when can I pay my [VAT](obligation_type)
@@ -57,24 +64,38 @@ nlu:
     - what is the limit of date that I can pay my [Deductions](obligation_type)
     - until when can I pay my [Compensation Fund](obligation_type)
     - what is the limit of date that I can pay my [Compensation Fund](obligation_type)
-
+    - what is the limit of date to pay my [VAT](obligation_type)
+    - what is the limit of date to pay my [Social Security](obligation_type)
+    - what is the limit of date to pay my [Deductions](obligation_type)
+    - what is the limit of date to pay my [Compensation Fund](obligation_type)
 - intent: ask_insight
   examples: |
     - Show me a [positive](insight_type) insight.
     - Show me a [neutral](insight_type) insight.
     - Show me a [negative](insight_type) insight.
-
+    - Give me a [positive](insight_type) insight.
+    - Give me a [neutral](insight_type) insight.
+    - Give me a [negative](insight_type) insight.
+    - I want a [positive](insight_type) insight.
+    - I want a [neutral](insight_type) insight.
+    - I want a [negative](insight_type) insight.
 - intent: ask_all_insights
   examples: |
     - Show me all insights.
     - Show all insights.
-
+    - i want all insights
+    - give me all insights
 - intent: ask_all_insights_per_type
   examples: |
     - Show me all [positive](insight_type) insights.
     - Show me all [neutral](insight_type) insights.
     - Show me all [negative](insight_type) insights.
-
+    - give me all [positive](insight_type) insights.
+    - give me all [negative](insight_type) insights.
+    - give me all [neutral](insight_type) insights.
+    - I want all [positive](insight_type) insights
+    - I want all [negative](insight_type) insights
+    - I want all [neutral](insight_type) insights
 - intent: affirm
   examples: |
     - yes
@@ -83,7 +104,6 @@ nlu:
     - of course
     - that sounds good
     - correct
-
 - intent: deny
   examples: |
     - no
@@ -93,7 +113,6 @@ nlu:
     - don't like that
     - no way
     - not really
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
